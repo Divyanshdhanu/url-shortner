@@ -6,7 +6,6 @@ const shortUrl= require('./models/shortUrl')
 
 app.set('view engine','ejs')
 app.use(express.urlencoded({extended: false}))
-
 // connect mongodb
 mongoose.Promise =global.Promise
 mongoose.connect('mongodb://localhost:27017/shortUrl', { useNewUrlParser: true }).then(function(){
@@ -14,14 +13,11 @@ mongoose.connect('mongodb://localhost:27017/shortUrl', { useNewUrlParser: true }
 })
 
 
-
 app.get("/", (req,res)=>{
      shortUrl.find({}).then(function(allTable){
-
         // console.log(allTable)
          res.render('index.ejs',{shortUrls :allTable})
      })
-  
    
 })
 
@@ -45,6 +41,7 @@ app.get('/:shortUrl', async(req,res)=>{
 })
 
 
-app.listen(3000,(req,res)=>{
-    console.log("app is running on port 3000");
+const port= process.env.PORT  || 3000
+app.listen(port,(req,res)=>{
+    console.log(`app is running on port ${port}`);
 })
